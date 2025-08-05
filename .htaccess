@@ -3,6 +3,19 @@
         Options -MultiViews
     </IfModule>
 
+    # Block access to all dotfiles (files starting with a dot)
+    <FilesMatch "^\.">
+       # Apache 2.2
+       <IfModule !authz_core_module>
+          Deny from all
+       </IfModule>
+       
+       # Apache 2.4+
+       <IfModule authz_core_module>
+          Require all denied
+       </IfModule>
+    </FilesMatch>
+
     # Make sure .env files not not browseable if in a sub-directory.
     <FilesMatch "\.env$">
        # Apache 2.2

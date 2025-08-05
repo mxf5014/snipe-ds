@@ -9,8 +9,7 @@ This is a FOSS project for asset management in IT Operations. Knowing who has wh
 
 It is built on [Laravel 11](http://laravel.com).
 
-Snipe-IT is actively developed and we [release quite frequently](https://github.com/grokability/snipe-it/releases). ([Check out the live demo here](https://snipeitapp.com/demo/).)
-
+./add_components.sh
 > [!TIP]
 > __This is web-based software__. This means there is no executable file (aka no .exe files), and it must be run on a web server and accessed through a web browser. It runs on any Mac OSX, any flavor of Linux, as well as Windows, and we have a [Docker image](https://snipe-it.readme.io/docs/docker) available if that's what you're into.
 
