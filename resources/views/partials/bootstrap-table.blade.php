@@ -996,10 +996,12 @@
 
             // This is kinda gross, but for right now we're posting to the GUI delete routes
             // All of these URLS and storage directories need to be updated to be more consistent :(
-            if (row.item.type == 'assetmodels') {
-                 destination = 'models';
+            if (row.item.type === 'assetmodels') {
+                destination = 'models';
+            } else if (row.item.type === 'assets') {
+                destination = 'hardware';
             } else {
-                 destination = row.item.type;
+                destination = row.item.type;
             }
 
             return '<a href="{{ config('app.url') }}/' + destination + '/' + row.item.id + '/showfile/' + row.id + '/delete" '
