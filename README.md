@@ -9,13 +9,16 @@ This is a FOSS project for asset management in IT Operations. Knowing who has wh
 
 It is built on [Laravel 11](http://laravel.com).
 
-./add_components.sh
+> [!IMPORTANT]
+> **This is a Docker-only deployment.** Snipe-IT is designed to run exclusively in Docker containers for consistency, reliability, and ease of deployment.
+
 > [!TIP]
 > __This is web-based software__. This means there is no executable file (aka no .exe files), and it must be run on a web server and accessed through a web browser. It runs on any Mac OSX, any flavor of Linux, as well as Windows, and we have a [Docker image](https://snipe-it.readme.io/docs/docker) available if that's what you're into.
 
 -----
 
 ### Table of Contents
+* [Quick Start with Docker](#quick-start-with-docker)
 * [Installation](#installation)
 * [User's Manual](#users-manual)
 * [Bug Reports & Feature Requests](#bug-reports--feature-requests)
@@ -27,12 +30,38 @@ It is built on [Laravel 11](http://laravel.com).
 * [Contributing](#contributing)
 * [Announcement List](#announcement-list)
 
-
 -----
+
+### Quick Start with Docker
+
+The fastest way to get Snipe-IT running:
+
+```bash
+# Clone the repository
+git clone https://github.com/grokability/snipe-it.git
+cd snipe-it
+
+# Copy the environment file
+cp .env.example .env
+
+# Edit the environment file with your settings
+# (database credentials, app key, etc.)
+
+# Start the application
+docker-compose up -d
+
+# The application will be available at http://localhost:8000
+```
 
 ### Installation
 
-For instructions on installing and configuring Snipe-IT on your server, check out the [installation manual](https://snipe-it.readme.io/docs). (Please see the [requirements documentation](https://snipe-it.readme.io/docs/requirements) for full requirements.)
+For instructions on installing and configuring Snipe-IT using Docker, check out the [installation manual](https://snipe-it.readme.io/docs). (Please see the [requirements documentation](https://snipe-it.readme.io/docs/requirements) for full requirements.)
+
+**Docker Requirements:**
+- Docker Engine 20.10+
+- Docker Compose 2.0+
+- At least 2GB RAM available
+- At least 10GB disk space
 
 If you're having trouble with the installation, please check the [Common Issues](https://snipe-it.readme.io/docs/common-issues) and [Getting Help](https://snipe-it.readme.io/docs/getting-help) documentation, and search this repository's open *and* closed issues for help.
 

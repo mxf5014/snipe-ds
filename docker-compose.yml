@@ -1,8 +1,12 @@
-# Compose file for production.
+# Snipe-IT Docker Compose Configuration
+# This is the ONLY way to run Snipe-IT - Docker-only deployment
+
+version: '3.8'
 
 volumes:
   db_data:
   storage:
+  redis_data:
 
 services:
   app:
@@ -16,8 +20,13 @@ services:
       db:
         condition: service_healthy
         restart: true
+      redis:
+        condition: service_started
     env_file:
       - .env
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
 
   db:
     image: mariadb:11.4.7
@@ -30,8 +39,13 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     healthcheck:
-      # https://mariadb.com/kb/en/using-healthcheck-sh/#compose-file-example
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 5s
       timeout: 1s
       retries: 5
+
+  redis:
+    image: redis:7.4.3
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
