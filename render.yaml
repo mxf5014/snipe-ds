@@ -52,13 +52,13 @@ services:
       - key: MAIL_PORT
         value: 587
       - key: MAIL_USERNAME
-        sync: false
+        value: your-email@gmail.com
       - key: MAIL_PASSWORD
-        sync: false
+        value: your-app-password
       - key: MAIL_ENCRYPTION
         value: tls
       - key: MAIL_FROM_ADDRESS
-        sync: false
+        value: your-email@gmail.com
       - key: MAIL_FROM_NAME
         value: Snipe-IT
       - key: IMAGE_LIB
