@@ -21,29 +21,24 @@ services:
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST
-        fromService:
+        fromDatabase:
           name: snipe-it-db
-          type: pserv
           property: host
       - key: DB_PORT
-        fromService:
+        fromDatabase:
           name: snipe-it-db
-          type: pserv
           property: port
       - key: DB_DATABASE
-        fromService:
+        fromDatabase:
           name: snipe-it-db
-          type: pserv
           property: database
       - key: DB_USERNAME
-        fromService:
+        fromDatabase:
           name: snipe-it-db
-          type: pserv
-          property: username
+          property: user
       - key: DB_PASSWORD
-        fromService:
+        fromDatabase:
           name: snipe-it-db
-          type: pserv
           property: password
       - key: MAIL_MAILER
         value: smtp
@@ -90,22 +85,9 @@ services:
       - key: SESSION_HTTP_ONLY
         value: true
 
-  - type: pserv
-    name: snipe-it-db
-    env: docker
+databases:
+  - name: snipe-it-db
+    databaseName: snipeit
+    user: snipeit
     plan: starter
     region: oregon
-    image: mariadb:11.4.7
-    dockerCommand: >
-      --default-authentication-plugin=mysql_native_password
-      --character-set-server=utf8mb4
-      --collation-server=utf8mb4_unicode_ci
-    envVars:
-      - key: MYSQL_DATABASE
-        value: snipeit
-      - key: MYSQL_USER
-        value: snipeit
-      - key: MYSQL_PASSWORD
-        generateValue: true
-      - key: MYSQL_ROOT_PASSWORD
-        generateValue: true
