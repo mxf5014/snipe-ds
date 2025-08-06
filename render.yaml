@@ -11,9 +11,9 @@ services:
       - key: APP_DEBUG
         value: false
       - key: APP_KEY
-        generateValue: true
+        value: base64:SsoofjyOBWfXceoW552UTZYTWZfLSve9G2iGLjxJpNc=
       - key: APP_URL
-        sync: false
+        value: https://snipe-ds.onrender.com
       - key: APP_TIMEZONE
         value: UTC
       - key: APP_LOCALE
@@ -52,13 +52,13 @@ services:
       - key: MAIL_PORT
         value: 587
       - key: MAIL_USERNAME
-        sync: false
+        value: your-email@gmail.com
       - key: MAIL_PASSWORD
-        sync: false
+        value: your-app-password
       - key: MAIL_ENCRYPTION
         value: tls
       - key: MAIL_FROM_ADDRESS
-        sync: false
+        value: your-email@gmail.com
       - key: MAIL_FROM_NAME
         value: Snipe-IT
       - key: IMAGE_LIB
@@ -95,7 +95,7 @@ services:
     env: docker
     plan: starter
     region: oregon
-    dockerImage: mariadb:11.4.7
+    image: mariadb:11.4.7
     dockerCommand: >
       --default-authentication-plugin=mysql_native_password
       --character-set-server=utf8mb4
@@ -108,4 +108,4 @@ services:
       - key: MYSQL_PASSWORD
         generateValue: true
       - key: MYSQL_ROOT_PASSWORD
-        generateValue: true 
+        generateValue: true
