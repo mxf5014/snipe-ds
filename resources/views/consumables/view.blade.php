@@ -423,12 +423,12 @@
               <thead>
               <tr>
                 <th data-searchable="false" data-sortable="false" data-field="avatar" data-formatter="imageFormatter">{{ trans('general.image') }}</th>
-                <th data-searchable="false" data-sortable="false" data-field="name" data-formatter="usersLinkFormatter">{{ trans('general.user') }}</th>
+                <th data-searchable="false" data-sortable="false" data-field="user" data-formatter="usersLinkObjFormatter">{{ trans('general.user') }}</th>
                 <th data-searchable="false" data-sortable="false" data-field="created_at" data-formatter="dateDisplayFormatter">
                   {{ trans('general.date') }}
                 </th>
                 <th data-searchable="false" data-sortable="false" data-field="note">{{ trans('general.notes') }}</th>
-                <th data-searchable="false" data-sortable="false" data-field="admin">{{ trans('general.created_by') }}</th>
+                <th data-searchable="false" data-sortable="false" data-field="created_by" data-formatter="usersLinkObjFormatter">{{ trans('general.created_by') }}</th>
               </tr>
               </thead>
             </table>

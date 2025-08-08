@@ -7,6 +7,7 @@ use App\Models\Asset;
 use App\Models\AssetMaintenance;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Storage;
 
 class AssetMaintenancesTransformer
 {
@@ -33,6 +34,7 @@ class AssetMaintenancesTransformer
                 'created_at' => Helper::getFormattedDateObject($assetmaintenance->asset->created_at, 'datetime'),
                 'updated_at' => Helper::getFormattedDateObject($assetmaintenance->asset->updated_at, 'datetime'),
             ] : null,
+            'image' => ($assetmaintenance->image != '') ? Storage::disk('public')->url('asset_maintenances/'.e($assetmaintenance->image)) : null,
             'model' => (($assetmaintenance->asset) && ($assetmaintenance->asset->model)) ? [
                 'id' => (int) $assetmaintenance->asset->model->id,
                 'name'=> ($assetmaintenance->asset->model->name) ? e($assetmaintenance->asset->model->name).' '.e($assetmaintenance->asset->model->model_number) : null,

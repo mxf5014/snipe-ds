@@ -102,7 +102,11 @@ class LicensesController extends Controller
         $license->created_by           = auth()->id();
         $license->min_amt           = $request->input('min_amt');
 
-        session()->put(['redirect_option' => $request->get('redirect_option')]);
+        if($request->get('redirect_option') === 'back'){
+            session()->put(['redirect_option' => 'index']);
+        } else {
+            session()->put(['redirect_option' => $request->get('redirect_option')]);
+        }
 
         if ($license->save()) {
             return Helper::getRedirectOption($request, $license->id, 'Licenses')

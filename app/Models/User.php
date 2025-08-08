@@ -183,6 +183,17 @@ class User extends SnipeModel implements AuthenticatableContract, AuthorizableCo
         );
     }
 
+    protected static function booted(): void
+    {
+        static::forceDeleted(function (User $user) {
+            CheckoutRequest::where(['user_id' => $user->id])->forceDelete();
+        });
+
+        static::softDeleted(function (User $user) {
+            CheckoutRequest::where(['user_id' => $user->id])->delete();
+        });
+    }
+
 
     public function isAvatarExternal()
     {

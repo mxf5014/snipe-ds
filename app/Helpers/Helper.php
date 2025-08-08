@@ -1543,11 +1543,6 @@ class Helper
 
        // return to previous page
         if ($redirect_option === 'back') {
-            if ($backUrl === route('home')) {
-                return redirect()->to($backUrl)
-                ->with('warning', trans('general.page_error'));
-             }
-
             return redirect()->to($backUrl);
         }
 

@@ -23,10 +23,10 @@
 <div class="row">
   <div class="col-md-9">
     @if ($item->id)
-      <form class="form-horizontal" method="post" action="{{ route('maintenances.update', $item->id) }}" autocomplete="off">
+      <form class="form-horizontal" method="post" action="{{ route('maintenances.update', $item->id) }}" autocomplete="off" enctype="multipart/form-data">
       {{ method_field('PUT') }}
     @else
-      <form class="form-horizontal" method="post" action="{{ route('maintenances.store') }}" autocomplete="off">
+      <form class="form-horizontal" method="post" action="{{ route('maintenances.store') }}" autocomplete="off" enctype="multipart/form-data">
     @endif
     <!-- CSRF Token -->
     {{ csrf_field() }}
@@ -178,6 +178,9 @@
             </div>
           </div>
         </div>
+
+        @include ('partials.forms.edit.image-upload', ['image_path' => app('asset_maintenances_path')])
+
 
         <!-- Notes -->
         <div class="form-group {{ $errors->has('notes') ? ' has-error' : '' }}">

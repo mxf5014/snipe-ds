@@ -707,6 +707,22 @@ class StoreAssetTest extends TestCase
             });
     }
 
+    public function test_serial_validation()
+    {
+        $this->actingAsForApi(User::factory()->superuser()->create())
+            ->postJson(route('api.assets.store'), [
+                'asset_tag' => '1234',
+                'model_id' => AssetModel::factory()->create()->id,
+                'status_id' => Statuslabel::factory()->readyToDeploy()->create()->id,
+                'serial' => [
+                    // this should not be an array
+                ],
+            ])
+            ->assertOk()
+            ->assertStatusMessageIs('error')
+            ->assertMessagesContains('serial');
+    }
+
     public function testEncryptedCustomFieldCanBeStored()
     {
         $this->markIncompleteIfMySQL('Custom Fields tests do not work on MySQL');
@@ -782,7 +798,6 @@ class StoreAssetTest extends TestCase
                 'status_id'                   => $status->id,
                 'asset_tag'                   => '1234',
             ])
-            ->dump()
             ->assertStatusMessageIs('error')
             ->assertJsonPath('messages.'.$alphaField->db_column_name(), [trans('validation.alpha', ['attribute' => $cleaned_name])])
             ->assertOk()

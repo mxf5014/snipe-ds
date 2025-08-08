@@ -126,7 +126,12 @@ class UsersController extends Controller
         // we have to invoke the form request here to handle image uploads
         app(ImageUploadRequest::class)->handleImages($user, 600, 'avatar', 'avatars', 'avatar');
 
-        session()->put(['redirect_option' => $request->get('redirect_option')]);
+        if($request->get('redirect_option') === 'back'){
+            session()->put(['redirect_option' => 'index']);
+        } else {
+            session()->put(['redirect_option' => $request->get('redirect_option')]);
+        }
+
 
         if ($user->save()) {
             if ($request->filled('groups')) {
