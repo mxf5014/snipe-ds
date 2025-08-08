@@ -6,6 +6,8 @@ use App\Models\Asset;
 use App\Models\AssetMaintenance;
 use App\Models\Supplier;
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class EditAssetMaintenanceTest extends TestCase
@@ -34,11 +36,17 @@ class EditAssetMaintenanceTest extends TestCase
                 'start_date' => '2021-01-01',
                 'completion_date' => '2021-01-10',
                 'is_warranty' => 1,
+                'image' => UploadedFile::fake()->image('test_image.png'),
                 'cost' => '100.99',
                 'notes' => 'A note',
             ])
             ->assertOk();
 
+        // Since we rename the file in the ImageUploadRequest, we have to fetch the record from the database
+        $assetMaintenance = AssetMaintenance::where('title', 'Test Maintenance')->first();
+
+        // Assert file was stored...
+        Storage::disk('public')->assertExists(app('asset_maintenances_path').$assetMaintenance->image);
 
         $this->assertDatabaseHas('asset_maintenances', [
             'asset_id' => $asset->id,

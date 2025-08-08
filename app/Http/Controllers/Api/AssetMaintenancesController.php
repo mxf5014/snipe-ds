@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ImageUploadRequest;
 use App\Http\Transformers\AssetMaintenancesTransformer;
 use App\Models\Asset;
 use App\Models\AssetMaintenance;
@@ -126,14 +127,15 @@ class AssetMaintenancesController extends Controller
      * @version v1.0
      * @since [v1.8]
      */
-    public function store(Request $request) : JsonResponse | array
+    public function store(ImageUploadRequest $request) : JsonResponse | array
     {
         $this->authorize('update', Asset::class);
+
         // create a new model instance
         $maintenance = new AssetMaintenance();
         $maintenance->fill($request->all());
         $maintenance->created_by = auth()->id();
-
+        $maintenance = $request->handleImages($maintenance);
         // Was the asset maintenance created?
         if ($maintenance->save()) {
             return response()->json(Helper::formatStandardApiResponse('success', $maintenance, trans('admin/asset_maintenances/message.create.success')));

@@ -31,6 +31,15 @@ class AssetMaintenancesPresenter extends Presenter
                 'formatter' => 'maintenancesLinkFormatter',
             ],
             [
+                'field' => 'image',
+                'searchable' => false,
+                'sortable' => true,
+                'switchable' => true,
+                'title' => trans('general.image'),
+                'visible' => true,
+                'formatter' => 'imageFormatter',
+            ],
+            [
                 'field' => 'company',
                 'searchable' => true,
                 'sortable' => true,

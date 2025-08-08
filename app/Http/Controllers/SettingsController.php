@@ -1084,6 +1084,7 @@ class SettingsController extends Controller
 
         if (! config('app.lock_passwords')) {
             if (Storage::exists($path.'/'.$filename)) {
+                Log::warning('User '.auth()->user()->username.' is attempting to download backup file: '.$filename);
                 return StorageHelper::downloader($path.'/'.$filename);
             } else {
                 // Redirect to the backup page
@@ -1111,6 +1112,7 @@ class SettingsController extends Controller
                 if (Storage::exists($path . '/' . $filename)) {
 
                     try {
+                        Log::warning('User '.auth()->user()->username.' is attempting to delete backup file: '.$filename);
                         Storage::delete($path . '/' . $filename);
                         return redirect()->route('settings.backups.index')->with('success', trans('admin/settings/message.backup.file_deleted'));
                     } catch (\Exception $e) {
@@ -1190,7 +1192,7 @@ class SettingsController extends Controller
                     '--force' => true,
                 ]);
 
-                Log::debug('Attempting to restore from: '. storage_path($path).'/'.$filename);
+                Log::warning('User '.auth()->user()->username.' is attempting to restore from: '. storage_path($path).'/'.$filename);
 
                 $restore_params = [
                     '--force' => true,

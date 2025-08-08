@@ -9,16 +9,6 @@ use Carbon\Carbon;
 @parent
 @stop
 
-@section('header_right')
-  <div class="pull-right">
-    <a href="{{ route('maintenances.edit', $assetMaintenance) }}" class="btn btn-default pull-right">
-      {{ trans('general.update') }}</a>
-
-    <a href="{{ route('maintenances.index') }}" class="btn btn-primary text-right" style="margin-right: 10px;">{{ trans('general.back') }}</a>
-  </div>
-@stop
-
-
 {{-- Page content --}}
 @section('content')
   <div class="row">
@@ -157,6 +147,75 @@ use Carbon\Carbon;
     </div><!-- /box -->
 
     </div> <!-- col-md-9  end -->
-  </div> <!-- row  end -->
+    <div class="col-md-3">
+
+      @if ($assetMaintenance->image!='')
+        <div class="col-md-12 text-center" style="padding-bottom: 17px;">
+          <img src="{{ Storage::disk('public')->url(app('asset_maintenances_path').e($assetMaintenance->image)) }}" class="img-responsive img-thumbnail" style="width:100%" alt="{{ $assetMaintenance->name }}">
+        </div>
+      @endif
+
+      <div class="col-md-12">
+
+        <ul class="list-unstyled" style="line-height: 22px; padding-bottom: 20px;">
+
+          @if ($assetMaintenance->notes)
+            <li>
+              <strong>{{ trans('general.notes') }}</strong>:
+              {!! nl2br(Helper::parseEscapedMarkedownInline($assetMaintenance->notes)) !!}
+            </li>
+          @endif
+
+          @if ($assetMaintenance->address!='')
+            <li>{{ $assetMaintenance->address }}</li>
+          @endif
+          @if ($assetMaintenance->address2!='')
+            <li>{{ $assetMaintenance->address2 }}</li>
+          @endif
+          @if (($assetMaintenance->city!='') || ($assetMaintenance->state!='') || ($assetMaintenance->zip!=''))
+            <li>{{ $assetMaintenance->city }} {{ $assetMaintenance->state }} {{ $assetMaintenance->zip }}</li>
+          @endif
+          @if ($assetMaintenance->manager)
+            <li>{{ trans('admin/users/table.manager') }}: {!! $assetMaintenance->manager->present()->nameUrl() !!}</li>
+          @endif
+          @if ($assetMaintenance->company)
+            <li>{{ trans('admin/companies/table.name') }}: {!! $assetMaintenance->company->present()->nameUrl() !!}</li>
+          @endif
+          @if ($assetMaintenance->parent)
+            <li>{{ trans('admin/locations/table.parent') }}: {!! $assetMaintenance->parent->present()->nameUrl() !!}</li>
+          @endif
+          @if ($assetMaintenance->ldap_ou)
+            <li>{{ trans('admin/locations/table.ldap_ou') }}: {{ $assetMaintenance->ldap_ou }}</li>
+          @endif
+
+
+          @if ((($assetMaintenance->address!='') && ($assetMaintenance->city!='')) || ($assetMaintenance->state!='') || ($assetMaintenance->country!=''))
+            <li>
+              <a href="https://maps.google.com/?q={{ urlencode($assetMaintenance->address.','. $assetMaintenance->city.','.$assetMaintenance->state.','.$assetMaintenance->country.','.$assetMaintenance->zip) }}" target="_blank">
+                {!! trans('admin/locations/message.open_map', ['map_provider_icon' => '<i class="fa-brands fa-google" aria-hidden="true"></i>']) !!}
+                <x-icon type="external-link"/>
+              </a>
+            </li>
+            <li>
+              <a href="https://maps.apple.com/?q={{ urlencode($assetMaintenance->address.','. $assetMaintenance->city.','.$assetMaintenance->state.','.$assetMaintenance->country.','.$assetMaintenance->zip) }}" target="_blank">
+                {!! trans('admin/locations/message.open_map', ['map_provider_icon' => '<i class="fa-brands fa-apple" aria-hidden="true" style="font-size: 18px"></i>']) !!}
+                <x-icon type="external-link"/></a>
+            </li>
+          @endif
+
+        </ul>
+      </div>
+
+      @can('update', $assetMaintenance)
+        <div class="col-md-12">
+          <a href="{{ route('maintenances.edit', [$assetMaintenance->id]) }}" style="width: 100%;" class="btn btn-sm btn-warning btn-social">
+            <x-icon type="edit" />
+            {{ trans('general.update') }}
+          </a>
+        </div>
+      @endcan
+    </div>
+
+    </div> <!-- row  end -->
 
 @stop
